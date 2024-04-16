@@ -11,7 +11,7 @@ async function connectDb() {
         );
 
         console.log(
-            `\n🛢 MongoDb Connected DB Host || ${connectionInstance.connection.host}:${port}`
+            `\n 🛢 MongoDb Connected DB Host || ${connectionInstance.connection.host}:${port}`
         );
     } catch (error) {
         console.log("DB connection Failed :", error);
@@ -19,3 +19,5 @@ async function connectDb() {
 }
 
 export default connectDb;
+
+// Default Export: Typically used when a module only needs to export a single function, class, or object.
