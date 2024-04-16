@@ -16,8 +16,6 @@ dotenv.config({
 
 
 
-
-
 // Database connection and Server Listning
 connectDb().then(() => {
   app.listen(port, () => console.log(`⚙️  Server  running  on Port : ${port}`))

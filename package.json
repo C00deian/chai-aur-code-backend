@@ -11,7 +11,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
-    "nodemon": "^3.1.0"
+    "i": "^0.3.7",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose-aggregate-paginate-v2": "^1.0.7",
+    "nodemon": "^3.1.0",
+    "npm": "^10.5.2"
   }
 }
