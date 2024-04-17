@@ -54,7 +54,7 @@ userSchema.pre('save', async function (next) {
 
     // only change the password when i use password first time or modify password
     if (!this.isModified('password')) return next();
-    this.password = bcrypt.hash(this.password, 10)
+    this.password =  await bcrypt.hash(this.password, 10)
     next();
 
 });
