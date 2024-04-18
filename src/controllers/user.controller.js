@@ -11,14 +11,14 @@ const generateAccessAndRefreshToken = async (userId) => {
     try {
     const user = await User.findById(userId)
         const accessToken = user.generateAccessToken();
-    const refreshToken = user.generateRefreshToken();
+    const refreshToken = user.generateRefreshToken();  
 
     // get refresh token  
     user.refreshToken = refreshToken
       //  console.log( ' saved refresh token',refreshToken)
 
     // save generated refresh token into db 
-    await user.save({ validateBeforeSave: true })
+    await user.save({ validateBeforeSave: false })
 
   return  { accessToken, refreshToken }
 
@@ -60,7 +60,7 @@ const registerUser = asyncHandler(async (req, res) => {
     )
 
     if (userExist) {
-        throw new ApiError(409, 'User with email or username already exist')
+        throw new ApiError(409, 'User with email or username is  Already exists')
     }
 
     // console.log("avatar" ,req.files)

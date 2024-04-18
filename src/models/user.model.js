@@ -52,17 +52,19 @@ const userSchema = new Schema({
 // we are hashing password
 userSchema.pre('save', async function (next) {
 
-    // only change the password when i use password first time or modify password
+// only want to hash and update the password when it's either being set for the first time or being modified.
     if (!this.isModified('password')) return next();
     this.password =  await bcrypt.hash(this.password, 10)
     next();
 
 });
 
+
 // compare password
 userSchema.methods.isPasswordCorrect = async function (password) {
   await bcrypt.compare(password , this.password )
 }
+
 
 // generateAccessToken
 userSchema.methods.generateAccessToken = function () {
