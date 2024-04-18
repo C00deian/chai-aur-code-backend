@@ -6,24 +6,23 @@ import { ApiResponse } from "../utils/ApiResponse.js"
 
 
 
-
-
 // generate Access-token and Referesh-tooken
 const generateAccessAndRefreshToken = async (userId) => {
+    try {
     const user = await User.findById(userId)
-    const accessToken = user.generateAccessToken();
+        const accessToken = user.generateAccessToken();
     const refreshToken = user.generateRefreshToken();
 
-    // get refresh token 
+    // get refresh token  
     user.refreshToken = refreshToken
-
+      //  console.log( ' saved refresh token',refreshToken)
 
     // save generated refresh token into db 
     await user.save({ validateBeforeSave: true })
 
-     { accessToken, refreshToken }
+  return  { accessToken, refreshToken }
 
-    try {
+
 
     } catch (error) {
         throw new ApiError(500, 'something went wrong while generating refresh ans acces')
@@ -125,8 +124,8 @@ const loginUser = asyncHandler(async (req, res) => {
 
     const { email, password, username } = req.body
 
-    if (!username || !email) {
-        throw new ApiError(400, 'username or password should not be blank')
+    if (!username && !email) {
+        throw new ApiError(400, 'username or email is required');
     }
 
     const isUserExist = await User.findOne({
@@ -162,7 +161,7 @@ const loginUser = asyncHandler(async (req, res) => {
     res.
         status(200)
         .cookie("accessToken", accessToken, options)
-        .cookie("refreshToken", refreshToken).json(
+        .cookie("refreshToken", refreshToken, options).json(
             new ApiResponse(200, {
 
                 user: loggedinUser,
@@ -179,7 +178,7 @@ const loginUser = asyncHandler(async (req, res) => {
 // Logout
 const logOutUser = asyncHandler(async (req, res) => {
 
-    User.findByIdAndUpdate(
+  await  User.findByIdAndUpdate(
         req.user._id,
         {
             $set: {
