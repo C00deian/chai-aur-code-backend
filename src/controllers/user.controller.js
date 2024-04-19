@@ -140,7 +140,6 @@ const loginUser = asyncHandler(async (req, res) => {
     }
 
 
-    // check password 
 
     const isPasswordValid = isUserExist.isPasswordCorrect(password)
     if (!isPasswordValid) {
@@ -164,7 +163,7 @@ const loginUser = asyncHandler(async (req, res) => {
         .cookie("refreshToken", refreshToken, options).json(
             new ApiResponse(200, {
 
-                user: loggedinUser,
+               "user": loggedinUser,
                 accessToken, refreshToken
             },
                 'User Logged In Successfully'
@@ -178,8 +177,10 @@ const loginUser = asyncHandler(async (req, res) => {
 // Logout
 const logOutUser = asyncHandler(async (req, res) => {
 
-  await  User.findByIdAndUpdate(
-        req.user._id,
+    await User.findByIdAndUpdate(
+      
+        req.authorizedUser._id,
+      
         {
             $set: {
                 refreshToken: undefined
@@ -196,7 +197,7 @@ const logOutUser = asyncHandler(async (req, res) => {
         .status(200)
         .clearCookie('accessToken', options)
         .clearCookie('refreshToken', options)
-        .json(new ApiResponse(200, {}, 'User logged Out'));
+        .json(new ApiResponse(200, { }, 'User logged Out'));
 
 })
 

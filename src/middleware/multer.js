@@ -1,6 +1,6 @@
 import multer from "multer";
 
-const uplaod = multer({
+const upload = multer({
 
     storage: multer.diskStorage({
      
@@ -16,7 +16,7 @@ const uplaod = multer({
     })
 });
 
-export { uplaod }
+export { upload }
 
 
 // const storage = multer.diskStorage({

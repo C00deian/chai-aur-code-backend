@@ -17,14 +17,17 @@ const verifyJwtToken = asyncHandler(async(req,
        // console.log('decodedToken', decodedToken)
  
      const user = await User.findById(decodedToken?.id).select("-password -refreshToken");
-   //  console.log( "user Id " , user)
+    // console.log( "user Id " , user.id)
        if (!user) {
          
          throw new ApiError(401, 'Invalid Access Token');
-     }
-     
-    //  req.AccesstoUser = user;
-       req.user = user;
+      }
+      
+      // Authorize user to access the resources
+     // console.log(user)
+      req.authorizedUser = user
+   
+      //  req.user = user;
        next();
        
    } catch (error) {
