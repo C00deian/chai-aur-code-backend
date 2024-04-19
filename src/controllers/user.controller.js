@@ -96,9 +96,11 @@ const registerUser = asyncHandler(async (req, res) => {
         coverImage: coverImage?.url || ''
     })
 
+
     const createdUser = await User.findById(user._id).select(
-        '-password -refreshToken'
+        '-password'
     )
+   
 
     if (!createdUser) {
         throw new ApiError(500, 'Somthing went wrong while registering User')
@@ -116,6 +118,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
 
 const loginUser = asyncHandler(async (req, res) => {
+
     // get username or email and password from client 
     // check  username or email  password is Empty 
     // check if username or email and matches the db's username or email 
@@ -198,6 +201,7 @@ const logOutUser = asyncHandler(async (req, res) => {
 
 const refreshAccessToken  =  asyncHandler(async (req, res) => {
 
+      //store jwt in a header cookies in a refreshToken key
    const incomingRefreshToken =  req.cookies.refreshToken || req.body.refreshToken
 
     if (!incomingRefreshToken) {

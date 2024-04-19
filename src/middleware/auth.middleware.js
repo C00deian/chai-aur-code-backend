@@ -3,11 +3,16 @@ import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import jwt from 'jsonwebtoken';
 
+
+
+// to check if user exist or not 
+
 const verifyJwtToken = asyncHandler(async(req, 
     _, next) => {
 
-    try {
-     const token = req.cookies?.accessToken || req.header('Authorization')?.replace('Bearer', "");
+  try {
+    //stored jwt in cookies at accessToken key
+     const token = req.cookies?.accessToken || req.header('Authorization')?.replace('Bearer ', "");
  
      if (!token) {
          throw new ApiError(401, 'Unauthorized request');
